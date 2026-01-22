@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infomaterial: Der Holocaust in Europa - Interaktiver Ländervergleich</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 30px -40px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .assignment-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .assignment-box h2 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .assignment-box p {
+            color: #856404;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: "▸";
+            color: #3498db;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .country-section {
+            background-color: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .denmark-section {
+            background-color: #e8f4f8;
+            border-left-color: #27ae60;
+        }
+        
+        .highlight-box {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .highlight-box h3 {
+            color: #155724;
+        }
+        
+        .warning-box {
+            background-color: #f8d7da;
+            border: 2px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .factor-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .factor-list li {
+            padding: 12px;
+            margin: 10px 0;
+            background-color: white;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .factor-list li strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stats-box {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .grid-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.2s;
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .grid-item h4 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        
+        .country-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .country-btn {
+            padding: 12px 20px;
+            background-color: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+        }
+        
+        .country-btn:hover {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .country-btn.active {
+            background-color: #27ae60;
+            color: white;
+            border-color: #27ae60;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .rate-low {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .rate-medium {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .rate-high {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .summary-box h3 {
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .summary-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .summary-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        
+        .country-info {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .country-info.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .region-label {
+            background-color: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .note {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            header {
+                background: #2c3e50;
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Infomaterial: Der Holocaust in Europa</h1>
+            <p class="subtitle">Interaktiver Ländervergleich - Wählen Sie ein Land aus</p>
+        </header>
+
+        <div class="assignment-box">
+            <h2>📝 Arbeitsauftrag: Warum? Dänemark und andere Länder</h2>
+            <p>
+                <strong>Aufgabe:</strong> Recherchieren Sie, was das Besondere an der Situation jüdischer Bürger in Dänemark war. 
+                Warum wurde kein dänischer Jude in ein Vernichtungslager geschickt? Vergleichen Sie Dänemark mit einem anderen Land Ihrer Wahl. 
+                Nutzen Sie hierfür das Infomaterial. Notieren Sie die Opferrate und die Hauptfaktoren und formulieren Sie eine zentrale historische Erkenntnis.
+            </p>
+        </div>
+
+        <h2>🇩🇰 Der dänische Sonderfall</h2>
+        
+        <div class="country-section denmark-section">
+            <h3>Die Rettung der dänischen Juden</h3>
+            <div class="stats-box">
+                <span class="icon">📊</span> Opferrate: <2% (ca. 120 von 8.000 Juden)
+            </div>
+            <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                <span class="icon">✓</span> Gerettet: Über 7.000 Juden flohen nach Schweden
+            </div>
+            <p style="margin-top: 20px; font-size: 1.05em;">
+                <strong>Die zentrale Frage:</strong> Warum gelang in Dänemark, was in fast allen anderen besetzten Ländern scheiterte?
+            </p>
+        </div>
+
+        <h3>Strukturelle und politische Faktoren</h3>
+        
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>1️⃣ Wohlfahrtsstaat und Gleichheitsprinzip</h4>
+                <p><strong>Kernidee:</strong> Jeder, der Teil des Landes ist, steht unter staatlichem Schutz.</p>
+                <ul class="factor-list">
+                    <li><strong>Staatliche Mission:</strong> Die dänischen Behörden sahen den Schutz der Juden als ihre Verantwortung</li>
+                    <li><strong>Kapitulationsabkommen 1940:</strong> Dänemark erklärte, keine Schädigung der jüdischen Minderheit zu dulden</li>
+                    <li><strong>Schutz "von oben":</strong> Die staatliche Haltung war genauso wichtig wie die Solidarität der Bevölkerung</li>
+                </ul>
+            </div>
+            
+            <div class="grid-item">
+                <h4>2️⃣ Demokratische Graswurzel-Tradition</h4>
+                <p><strong>Historischer Hintergrund:</strong> Jahrzehntelange demokratische Bildung (19./20. Jahrhundert)</p>
+                <ul class="factor-list">
+                    <li><strong>Bauerngenossenschaften:</strong> Schulten die Bevölkerung in demokratischen Grundprinzipien</li>
+                    <li><strong>Gewerkschaften:</strong> Bis 1943 waren die meisten Arbeiter organisiert → Solidaritätsbewusstsein</li>
+                    <li><strong>Effektive Aktivierung:</strong> Die Bevölkerung konnte schnell und koordiniert handeln</li>
+                </ul>
+            </div>
+            
+            <div class="grid-item">
+                <h4>3️⃣ Das "Modellprotektorat"</h4>
+                <p><strong>Einzigartige Besatzungssituation:</strong> Relative Autonomie</p>
+                <ul class="factor-list">
+                    <li><strong>Schnelle Kapitulation:</strong> Innerhalb von 2 Stunden (9. April 1940)</li>
+                    <li><strong>Erhaltene Strukturen:</strong> Eigene Regierung, Polizei, Justiz, 3.000 Mann Armee</li>
+                    <li><strong>Keine antisemitischen Gesetze:</strong> Kein gelber Stern, keine Ghettos, Synagogen blieben geöffnet</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Kulturelle und soziale Faktoren</h3>
+        
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>4️⃣ Geringer Antisemitismus</h4>
+                <ul class="factor-list">
+                    <li><strong>Historische Entwicklung:</strong> Antisemitismus schwächte sich ab dem 19. Jahrhundert deutlich ab</li>
+                    <li><strong>Wertesystem:</strong> Christliche Barmherzigkeit + sozialistische Solidarität</li>
+                    <li><strong>Kirchlicher Protest:</strong> Am 3. Oktober 1943 wurde von jeder Kanzel ein Protestbrief gegen Deportationen verlesen</li>
+                </ul>
+            </div>
+            
+            <div class="grid-item">
+                <h4>5️⃣ Gemeinschaftssinn</h4>
+                <ul class="factor-list">
+                    <li><strong>Juden als Mitbürger:</strong> Nicht als "Andere" wahrgenommen</li>
+                    <li><strong>Schutz der Zivilgesellschaft:</strong> Juden zu helfen bedeutete, dänische Werte zu verteidigen</li>
+                    <li><strong>Keine Unterscheidung:</strong> Langjährige Bürger und Flüchtlinge wurden gleich behandelt</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Praktische und geografische Faktoren</h3>
+        
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>6️⃣ Günstige Geografie</h4>
+                <ul class="factor-list">
+                    <li><strong>Nähe zu Schweden:</strong> Kopenhagen liegt weniger als 32 km (20 Meilen) von Schweden entfernt</li>
+                    <li><strong>Neutrales Schweden:</strong> Kündigte am 2. Oktober 1943 an, alle dänischen Juden aufzunehmen</li>
+                    <li><strong>Kurze Fluchtroute:</strong> Reduzierte Risiko und benötigte Zeit erheblich</li>
+                </ul>
+            </div>
+            
+            <div class="grid-item">
+                <h4>7️⃣ Wachsender Widerstand</h4>
+                <ul class="factor-list">
+                    <li><strong>Augustaufstand 1943:</strong> Generalstreiks, Demonstrationen, Sabotage</li>
+                    <li><strong>Rücktritt der Regierung:</strong> 29. August 1943</li>
+                    <li><strong>Breite Unterstützung:</strong> Mehrheit der Dänen unterstützte den Widerstand</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>8️⃣ Der entscheidende Faktor: Die Warnung</h3>
+            <p><strong>Werner Best</strong> (deutscher Reichsbevollmächtigter) warnte selbst vor der geplanten Razzia:</p>
+            <ul class="factor-list">
+                <li><strong>Georg Duckwitz:</strong> Bests Marineattaché arrangierte sichere Passage nach Schweden</li>
+                <li><strong>Persönliche Warnungen:</strong> Best warnte Juden direkt</li>
+                <li><strong>Pragmatische Motive:</strong> Furcht vor zivilem Aufstand und Verlust der Kooperation</li>
+                <li><strong>Passive Unterstützung:</strong> Deutsche Patrouillenboote wurden zur "Reparatur" in den Hafen beordert – genau in der Nacht der Flucht</li>
+            </ul>
+        </div>
+
+        <div class="summary-box">
+            <h3>🎯 Zusammenfassung: Das einzigartige Zusammenspiel in Dänemark</h3>
+            <ul>
+                <li><strong>Institutionell:</strong> Wohlfahrtsstaat mit Gleichheitsprinzip und Verantwortung für alle Bürger</li>
+                <li><strong>Kulturell:</strong> Starke demokratische Traditionen, geringe antisemitische Vorurteile, christliche und sozialistische Werte</li>
+                <li><strong>Sozial:</strong> Ausgeprägter Gemeinschaftssinn, Juden als gleichberechtigte Dänen</li>
+                <li><strong>Praktisch:</strong> Geografische Nähe zu Schweden, kleine jüdische Bevölkerung (ca. 8.000)</li>
+                <li><strong>Politisch:</strong> Relative Autonomie unter Besatzung (bis August 1943)</li>
+                <li><strong>Taktisch:</strong> Rechtzeitige Warnung und passive Unterstützung durch deutsche Offizielle</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            <strong>⚠️ Wichtige Nuancierung:</strong> Die Rettung war nicht nur "moralische Überlegenheit". Viele Fischer verlangten Bezahlung (teilweise überhöhte Preise) für die Überfahrt, finanziert durch einen Fonds der Regierung und der Widerstandsbewegung. Die Rettung war eine Leistung "von oben" (Staat) UND "von unten" (Bevölkerung).
+        </div>
+
+        <h2>🌍 Andere besetzte Länder - Interaktiver Vergleich</h2>
+        
+        <p style="font-size: 1.05em; margin: 20px 0; color: #555;">
+            <strong>Klicken Sie auf ein Land, um detaillierte Informationen anzuzeigen:</strong>
+        </p>
+
+        <div class="country-buttons">
+            <!-- Westeuropa -->
+            <button class="country-btn" onclick="showCountry('albanien')">🇦🇱 Albanien</button>
+            <button class="country-btn" onclick="showCountry('italien')">🇮🇹 Italien</button>
+            <button class="country-btn" onclick="showCountry('frankreich')">🇫🇷 Frankreich</button>
+            <button class="country-btn" onclick="showCountry('belgien')">🇧🇪 Belgien</button>
+            <button class="country-btn" onclick="showCountry('niederlande')">🇳🇱 Niederlande</button>
+            <button class="country-btn" onclick="showCountry('norwegen')">🇳🇴 Norwegen</button>
+            
+            <!-- Südosteuropa -->
+            <button class="country-btn" onclick="showCountry('bulgarien')">🇧🇬 Bulgarien</button>
+            <button class="country-btn" onclick="showCountry('griechenland')">🇬🇷 Griechenland</button>
+            <button class="country-btn" onclick="showCountry('serbien')">🇷🇸 Serbien</button>
+            <button class="country-btn" onclick="showCountry('kroatien')">🇭🇷 Kroatien</button>
+            
+            <!-- Osteuropa -->
+            <button class="country-btn" onclick="showCountry('slowakei')">🇸🇰 Slowakei</button>
+            <button class="country-btn" onclick="showCountry('polen')">🇵🇱 Polen</button>
+            <button class="country-btn" onclick="showCountry('ungarn')">🇭🇺 Ungarn</button>
+            <button class="country-btn" onclick="showCountry('rumaenien')">🇷🇴 Rumänien</button>
+        </div>
+
+        <!-- ALBANIEN -->
+        <div id="albanien" class="country-info">
+            <div class="country-section" style="border-left-color: #27ae60;">
+                <span class="region-label">🏆 RETTUNGSFALL - Höchste Überlebensrate</span>
+                <h3>🇦🇱 Albanien – Einzigartige vollständige Rettung</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">✓</span> Überlebensrate: <span class="rate-low">&lt;1%</span> ermordet
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">📈</span> Jüdische Bevölkerung nach Krieg: 1.800 (vor dem Krieg: 300)
+                </div>
+                
+                <p><strong>Das Wunder von Albanien:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Besa-Ehrenkodex:</strong> Albanischer Ehrencodex verpflichtete zur Beschützung von Gästen - auch unter Lebensgefahr</li>
+                    <li><strong>Muslimische Mehrheit:</strong> 70% Muslime versteckten Juden in ihren Häusern und Bergen</li>
+                    <li><strong>Nur 5-6 Opfer:</strong> Von ca. 2.000 Juden überlebten nahezu alle</li>
+                    <li><strong>Bevölkerungswachstum:</strong> Die jüdische Bevölkerung wuchs sogar während des Krieges</li>
+                    <li><strong>Kosovo anders:</strong> 60% Überlebensrate in Kosovo, da Waffen-SS Division Skanderbeg 281 Juden deportierte</li>
+                    <li><strong>Religiöse Toleranz:</strong> Jahrzehntelange islamische Tradition der Toleranz gegenüber religiösen Minderheiten</li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: bold; color: #27ae60;">
+                    ✓ Einziges europäisches Land, dessen jüdische Bevölkerung nach dem Krieg größer war als davor!
+                </p>
+            </div>
+        </div>
+
+        <!-- ITALIEN -->
+        <div id="italien" class="country-info">
+            <div class="country-section" style="border-left-color: #27ae60;">
+                <span class="region-label">Mittelmeerraum - Relative Rettung trotz Faschismus</span>
+                <h3>🇮🇹 Italien – Überwiegend Überleben durch Kapitulation</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #9b59b6 100%);">
+                    <span class="icon">✓</span> Überlebensrate: <span class="rate-low">85-90%</span> (40.000+ von 44.500)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Deportiert nach Besetzung: 8.564 Juden
+                </div>
+                
+                <p><strong>Wendepunkt: Italienische Kapitulation September 1943</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Vor Sept. 1943:</strong> Faschistische Verfolgung, aber weniger radikal als in Deutschland</li>
+                    <li><strong>Nach Sept. 1943:</strong> Deutsche besetzen Nord-/Mittelitalien, Deportationen beginnen</li>
+                    <li><strong>Verstecknetzwerke:</strong> 90% der einheimischen Juden tauchten unter (Kirchen, Dörfer, Freunde)</li>
+                    <li><strong>Nur 1.009 Rückkehrer:</strong> Von 8.564 Deportierten überlebten nur etwa 1.009</li>
+                    <li><strong>Ausländische Juden gefährdet:</strong> Hatten kleinere Netzwerke, höhere Deportationsrate</li>
+                    <li><strong>Kirche aktiv:</strong> Viele Bischöfe und Klöster versteckten Juden aktiv</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FRANKREICH -->
+        <div id="frankreich" class="country-info">
+            <div class="country-section" style="border-left-color: #f39c12;">
+                <span class="region-label">Westeuropa - Kollaboration mit Wendepunkt</span>
+                <h3>🇫🇷 Frankreich – Ambivalente Rolle des Vichy-Regimes</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);">
+                    <span class="icon">⚠️</span> Opferrate: <span class="rate-medium">25%</span> (75.000-80.000 von 320.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">✓</span> Überlebte: <span class="rate-low">75%</span> (240.000-245.000)
+                </div>
+                
+                <p><strong>Die ambivalente Rolle des Vichy-Regimes:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Anfängliche Kollaboration:</strong> Eigene antisemitische Gesetze, Zusammenarbeit mit Deutschland</li>
+                    <li><strong>Massive französische Beteiligung:</strong> Zwei Drittel der Deportierten von französischer Polizei verhaftet</li>
+                    <li><strong>Wendepunkt (Oktober 1942):</strong> Vichy-Regierung verweigert weitere Massendepor­tationen nach vehementen Kirchenprotesten</li>
+                    <li><strong>Strategische Weigerung:</strong> Schutz von Juden mit französischer Staatsbürgerschaft in großem Umfang</li>
+                    <li><strong>Unterbrechungen:</strong> Ungünstiger Kriegsverlauf für Deutschland führte zu längeren Pausen</li>
+                    <li><strong>Amerikanischer Druck:</strong> USA übten hinter den Kulissen Druck aus</li>
+                    <li><strong>Regionale Unterschiede:</strong> Italienisch besetzte Zone war sicherer als deutsche Zone</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BELGIEN -->
+        <div id="belgien" class="country-info">
+            <div class="country-section" style="border-left-color: #f39c12;">
+                <span class="region-label">Westeuropa - Mittlere Opferrate</span>
+                <h3>🇧🇪 Belgien – Früher Widerstand rettet Leben</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <span class="icon">⚠️</span> Opferrate: <span class="rate-medium">40%</span> (28.000 von 66.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">✓</span> Überlebte: <span class="rate-low">60%</span> (38.000)
+                </div>
+                
+                <p><strong>Faktoren, die Leben retteten:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Militärregime statt Zivilverwaltung:</strong> Weniger fanatisch als SS-geführte Verwaltung in den Niederlanden</li>
+                    <li><strong>Gewaltsame Razzien als Warnsignal:</strong> Verbliebene Juden tauchten schnell unter oder organisierten falsche Papiere</li>
+                    <li><strong>Osteuropäischer Hintergrund:</strong> Über 90% waren Immigranten aus Osteuropa → kannten Verfolgungsmethoden und reagierten schneller</li>
+                    <li><strong>Früher Widerstand:</strong> Organisierter Widerstand begann früher als in den Niederlanden</li>
+                    <li><strong>Geringe Polizeikollaboration:</strong> Nur ein Sechstel der deportierten Juden wurde von belgischer Polizei verhaftet</li>
+                    <li><strong>Verstecknetzwerke:</strong> Kommunistische und kirchliche Organisationen halfen Juden</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- NIEDERLANDE -->
+        <div id="niederlande" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Westeuropa - Höchste Opferrate</span>
+                <h3>🇳🇱 Niederlande – Höchste Opferrate in Westeuropa</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">75%</span> (104.000 von 140.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> Anne Frank und Familie: Verborgen 25 Monate, dann deportiert
+                </div>
+                
+                <p><strong>Gründe für die hohe Opferrate:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>SS-Zivilverwaltung:</strong> Arthur Seyss-Inquart (extremer Antisemit) leitete die Besatzung</li>
+                    <li><strong>Deutsche Polizeikontrolle:</strong> Organisierte Deportationen fast unabhängig vom Rest des Besatzungsregimes</li>
+                    <li><strong>Täuschung statt offener Gewalt:</strong> Nach Februarstreik 1941 nutzte man systematische Desinformation und "vorläufige Ausnahmen", die später widerrufen wurden</li>
+                    <li><strong>Späte Widerstandsentwicklung:</strong> Organisierter Widerstand und Verstecknetzwerke entwickelten sich erst Frühjahr 1943 - Mehrheit war bereits deportiert</li>
+                    <li><strong>Integrierte Bevölkerung:</strong> 85% der Juden lebten seit Jahrhunderten dort → glaubten Täuschungen eher als osteuropäische Flüchtlinge</li>
+                    <li><strong>Hohe Polizeikollaboration:</strong> Ein Viertel der Juden wurde von niederländischer Polizei verhaftet</li>
+                    <li><strong>Zentrale Lage:</strong> Amsterdam wurde zum Verwaltungszentrum für Judentransporte nach Osten</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- NORWEGEN -->
+        <div id="norwegen" class="country-info">
+            <div class="country-section" style="border-left-color: #f39c12;">
+                <span class="region-label">Nordeuropa - Teilweise Flucht möglich</span>
+                <h3>🇳🇴 Norwegen – Quisling-Kollaboration mit teilweiser Rettung</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <span class="icon">⚠️</span> Opferrate: <span class="rate-medium">35%</span> (765-775 von 2.173 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">✓</span> Gerettet: Fast zwei Drittel, ca. 900 nach Schweden geschmuggelt
+                </div>
+                
+                <p><strong>Besondere Merkmale:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Vidkun Quisling:</strong> Norwegischer Faschist kollaborierte mit Nazis → sein Name wurde zum Synonym für "Verräter"</li>
+                    <li><strong>Polizeiliche Kollaboration:</strong> Norwegische Polizei und paramilitärische Formationen halfen bei Verhaftungen und Deportationen</li>
+                    <li><strong>Massendeportation:</strong> 26. November 1942 mit Schiff "Donau" - 770 Juden</li>
+                    <li><strong>Überlebensrate:</strong> Nur 34 der 770 deportierten Juden überlebten</li>
+                    <li><strong>Widerstandshilfe:</strong> Norwegische Widerstandsbewegung half ca. 900 Juden nach Schweden zu fliehen</li>
+                    <li><strong>Geografischer Vorteil:</strong> Nähe zu Schweden ermöglichte Flucht für schnelle Flüchtlinge</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BULGARIEN -->
+        <div id="bulgarien" class="country-info">
+            <div class="country-section" style="border-left-color: #27ae60;">
+                <span class="region-label">Südosteuropa - Der ambivalente Fall</span>
+                <h3>🇧🇬 Bulgarien – 0% im Kernland, 97% in besetzten Gebieten</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <span class="icon">✓</span> Überlebensrate in Bulgarien: <span class="rate-low">100%</span> (alle 48.000 gerettet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Aus besetzten Gebieten deportiert: 11.343 (97% Todesrate)
+                </div>
+                
+                <p><strong>Der paradoxe Fall:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Rettung im Kernland:</strong> Parlament, Kirche und Bevölkerung stopten Deportationen durch Proteste</li>
+                    <li><strong>König Boris III:</strong> Stoppte Deportationen nach vehementen Protesten - aber erlaubte Deportationen aus besetzten Gebieten</li>
+                    <li><strong>Kirche aktiv:</strong> Metropolitan Stefan drohte König mit Protest, Bischof Kyril versteckte Juden</li>
+                    <li><strong>März 1943 Deportation:</strong> 11.343 Juden aus Mazedonien und Thrakien nach Polen deportiert</li>
+                    <li><strong>Verstoß gegen Menschenrechte:</strong> Die Juden in besetzten Gebieten waren nicht bulgarische Bürger, daher "verhandelbar"</li>
+                    <li><strong>Später Schuldeingeständnis:</strong> Bulgarien bat lange Zeit nie um Vergebung für die Deportationen aus Mazedonien</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- GRIECHENLAND -->
+        <div id="griechenland" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Südosteuropa - Tragödie der Sepharden</span>
+                <h3>🇬🇷 Griechenland – Vernichtung der Saloniki-Sepharden</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">82-87%</span> (60.000-67.000 von 77.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> Saloniki: <span class="rate-high">96%</span> vernichtet (50.000 Juden)
+                </div>
+                
+                <p><strong>Die Tragödie der größten Sephardischen Gemeinde Europas:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Saloniki 1943:</strong> 50.000 Juden - größte sephardische Gemeinde Europas - praktisch komplett vernichtet</li>
+                    <li><strong>März 1943 Deportationen:</strong> 19 Transportzüge, 42.830 Juden deportiert direkt zu Gaskammern</li>
+                    <li><strong>Sofort vergast:</strong> 38.386 Juden unmittelbar nach Ankunft in Auschwitz ermordet</li>
+                    <li><strong>Bulgarische Zone:</strong> 4.075 Juden aus bulg.-besetztem Mazedonien und Thrakien nach Treblinka - 97% Todesrate</li>
+                    <li><strong>Italienische Zone Schutz:</strong> Italienisch-besetzte Zone war bis September 1943 relativ sicher</li>
+                    <li><strong>Kulturelle Auslöschung:</strong> 500 Jahre spanisch-jüdische Kultur wurde in wenigen Monaten ausgelöscht</li>
+                    <li><strong>Sprache verloren:</strong> Ladino-Sprache fast ganz verschwunden</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SERBIEN -->
+        <div id="serbien" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Südosteuropa - Frühe "Judenfrei"-Erklärung</span>
+                <h3>🇷🇸 Serbien – Erstes "judenfreies" besetztes Land</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">~90%</span> (ca. 18.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> Mai 1942: Als erstes besetztes Land "judenfrei" erklärt
+                </div>
+                
+                <p><strong>Wehrmacht als Täter - kein SS-Einsatz nötig:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Wehrmacht-Verbrechen:</strong> Reguläre deutsche Armee führte Morde durch, nicht nur SS</li>
+                    <li><strong>Gaswagen:</strong> Mobile Gaskammern zur Ermordung von Juden eingesetzt</li>
+                    <li><strong>Kollaboration:</strong> Milan Nedić's Regime und Zbor-Faschisten halfen aktiv bei Verfolgungen</li>
+                    <li><strong>Erste Erfolgreiche Vernichtung:</strong> Serbien war das erste besetzt Land, das komplett "judenfrei" wurde</li>
+                    <li><strong>Partisanen:</strong> Einige Juden schlossen sich Titos Partisanen an und überlebten als Kämpfer</li>
+                    <li><strong>Kulturelles Erbe verloren:</strong> Jahrhundertealte jüdische Gemeinden praktisch ausgelöscht</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- KROATIEN -->
+        <div id="kroatien" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Südosteuropa - Eigene Todeslager</span>
+                <h3>🇭🇷 Kroatien (Ustascha) – Eigenständige Vernichtung</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">~75%</span> (30.000+ von 39.000 ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">🏢</span> Jasenovac: Größtes Vernichtungslager am Balkan (100.000+ Opfer)
+                </div>
+                
+                <p><strong>Fanatisches Ustascha-Regime baut eigene Lager:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Jasenovac Konzentrationslager:</strong> Größtes Vernichtungslager am Balkan - 100.000+ Opfer (Juden, Serben, Roma)</li>
+                    <li><strong>Eigenständiges System:</strong> Nur Quisling-Regime neben Kroatien mit eigenem Vernichtungslager</li>
+                    <li><strong>Ustascha-Fanatismus:</strong> Nationalistische und religiöse Fanatiker, nicht nur von Nazi-Ideologie getrieben</li>
+                    <li><strong>Frühe Genozide:</strong> Beginnt möglicherweise vor systematischem Nazi-Judenmord</li>
+                    <li><strong>Systematische Vernichtung:</strong> Von 39.000 Juden wurden 30.000+ ermordet</li>
+                    <li><strong>Partisanen-Rettung:</strong> Ca. 9.000 überlebten (50%) durch Anschluss an Titos Partisanen</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLOWAKEI -->
+        <div id="slowakei" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Osteuropa - Frühe Kollaboration</span>
+                <h3>🇸🇰 Slowakei – Frühe Deportationen und Wiederaufnahme</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">75-80%</span> (ca. 71.500 von 89.000)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> 1942: 58.000 deportiert, 1944: 13.500 weitere nach Besetzung
+                </div>
+                
+                <p><strong>Der Tiso-Staat und zwei Deportationswellen:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>1. Deportationswelle (1942):</strong> 25. März - 20. Oktober, 58.000 Juden deportiert</li>
+                    <li><strong>Bezahlung für Deportation:</strong> Slowakei zahlte Deutschland 500 Reichsmark pro Jude</li>
+                    <li><strong>Wenige Überlebende:</strong> Nur wenige hundert überlebten aus dieser Welle</li>
+                    <li><strong>Stopp Oktober 1942:</strong> Nach Protesten und Bestechung unterbrochen</li>
+                    <li><strong>2. Deportationswelle (1944):</strong> Nach deutscher Besetzung weitere 13.500 deportiert</li>
+                    <li><strong>Tiso-Regime:</strong> Katholischer Priester Jozef Tiso als Präsident kollaborierte aktiv</li>
+                    <li><strong>Kirche ambivalent:</strong> Kirche protestierte teilweise, half aber nicht systematisch</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- POLEN -->
+        <div id="polen" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Osteuropa - Zentrum der Vernichtung</span>
+                <h3>🇵🇱 Polen – Das Zentrum der Vernichtung</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">90%</span> (3 Millionen von 3,3 Millionen ermordet)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">🏢</span> 6 Hauptvernichtungslager auf polnischem Boden
+                </div>
+                
+                <p><strong>Extreme Verfolgung und Zentrum des Holocaust:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Zentrum des Holocaust:</strong> Sechs Hauptvernichtungslager errichtet (Chełmno, Bełżec, Sobibór, Treblinka, Auschwitz-Birkenau, Majdanek)</li>
+                    <li><strong>Brutale Besatzung:</strong> Von Anfang an polnische Behörden beiseite geschoben, Bevölkerung brutal behandelt</li>
+                    <li><strong>Systematische Vernichtung:</strong> Ghettos (z.B. Warschau) → Deportation → Vernichtungslager</li>
+                    <li><strong>Keine Schutzstrukturen:</strong> Keine funktionsfähige Regierung wie in Dänemark, die hätte schützen können</li>
+                    <li><strong>Geografisches Zentrum:</strong> Polen wurde zum Zentrum der "Endlösung"</li>
+                    <li><strong>Größtes Ghetto:</strong> Warschauer Ghetto mit über 400.000 Menschen</li>
+                    <li><strong>Widerstand:</strong> Warschauer Ghettoaufstand (April-Mai 1943) - tragisches Symbol des Widerstands</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- UNGARN -->
+        <div id="ungarn" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Osteuropa - Intensive Deportationen 1944</span>
+                <h3>🇭🇺 Ungarn – Späte aber intensive Deportationen</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Deportiert: 437.000 Juden in nur 56 Tagen (15. Mai - 9. Juli 1944)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> Opferrate: <span class="rate-high">~80%</span> bei Ankunft in Auschwitz sofort vergast
+                </div>
+                
+                <p><strong>Rekordtempo der Vernichtung zu spät im Krieg:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Späte Besetzung:</strong> Deutschland besetzte Ungarn erst 19. März 1944 (Ungarn wollte Frieden mit Alliierten)</li>
+                    <li><strong>Adolf Eichmann persönlich:</strong> Kam nach Budapest, um die Deportationen zu überwachen</li>
+                    <li><strong>Enge ungarische Kollaboration:</strong> Die ungarische Gendarmerie arbeitete enthusiastisch mit</li>
+                    <li><strong>Rekordgeschwindigkeit:</strong> 147 Eisenbahnzüge in 56 Tagen - schnellste Deportationsaktion des Holocaust</li>
+                    <li><strong>Zu spät im Krieg:</strong> Krematorien in Auschwitz überlastet, Massengräber wurden gegraben</li>
+                    <li><strong>Hilfe vom Schweden:</strong> Raoul Wallenberg und schwedischer Botschafter Iver Ekdahl retteten tausende</li>
+                    <li><strong>Arrow-Cross Terror:</strong> Nach deutscher Besetzung ungarische Faschisten (Arrow Cross) terrorisierten Juden in Budapest</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RUMÄNIEN -->
+        <div id="rumaenien" class="country-info">
+            <div class="country-section" style="border-left-color: #c0392b;">
+                <span class="region-label">Osteuropa - Autonomer Völkermord</span>
+                <h3>🇷🇴 Rumänien – Autonome Vernichtung ohne SS</h3>
+                <div class="stats-box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <span class="icon">💀</span> Opferrate: 220.000-380.000 ermordet (50-60% in bestimmten Regionen)
+                </div>
+                <div class="stats-box" style="background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);">
+                    <span class="icon">💀</span> Transnistrien: 150.000-250.000 durch Kälte, Hunger, Krankheit, Erschießungen
+                </div>
+                
+                <p><strong>Eigenständiger Völkermord - Einziger Verbündeter mit eigenem Programm:</strong></p>
+                <ul class="factor-list">
+                    <li><strong>Einzigartig:</strong> Rumänien war einziger Verbündeter des Dritten Reichs mit eigenem systematischen Völkermord ohne SS-Intervention</li>
+                    <li><strong>Eigenständige Massaker:</strong> Rumänische Armee und Gendarmerie massakrierten tausende Juden in Bessarabien, Nord-Bukowina und Transnistrien</li>
+                    <li><strong>Deportation nach Transnistrien:</strong> 150.000-250.000 Juden starben dort an Kälte, Hunger, Krankheit oder Erschießungen</li>
+                    <li><strong>Massaker in Lagern:</strong> In Bogdanovka, Domanevka und Akhmetchetkha wurden Massenerschießungen durchgeführt</li>
+                    <li><strong>Selektive "Rettung":</strong> Rumänien weigerte sich, Juden aus Kernprovinzen (Moldawien, Walachei, Südtranssilvanien) zu deportieren</li>
+                    <li><strong>Spätere Umorientierung:</strong> Nach Stalingrad 1943 moderater, um Westmächte zu beeindrucken</li>
+                    <li><strong>Lange Verleugnung:</strong> Rumänien erkannte Schuld lange Zeit nicht an</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- VERGLEICHSTABELLE -->
+        <h2>📊 Vergleichstabelle aller Länder</h2>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Land</th>
+                    <th>Opferrate</th>
+                    <th>Hauptfaktoren</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: #d4edda;">
+                    <td><strong>🇩🇰 Dänemark</strong></td>
+                    <td><span class="rate-low">&lt;2%</span></td>
+                    <td>Warnung, Wohlfahrtsstaat, Schweden nahe, breite Unterstützung</td>
+                </tr>
+                <tr style="background-color: #d4edda;">
+                    <td><strong>🇦🇱 Albanien</strong></td>
+                    <td><span class="rate-low">&lt;1%</span></td>
+                    <td>Besa-Ehrenkodex, muslimische Mehrheit, Bevölkerung wuchs</td>
+                </tr>
+                <tr>
+                    <td><strong>🇮🇹 Italien</strong></td>
+                    <td><span class="rate-low">20%</span></td>
+                    <td>Italienische Kapitulation 1943, Verstecknetzwerke, Kirchenschutz</td>
+                </tr>
+                <tr>
+                    <td><strong>🇫🇷 Frankreich</strong></td>
+                    <td><span class="rate-medium">25%</span></td>
+                    <td>Vichy-Kollaboration, dann Proteste, Unterbrechungen</td>
+                </tr>
+                <tr>
+                    <td><strong>🇳🇴 Norwegen</strong></td>
+                    <td><span class="rate-medium">35%</span></td>
+                    <td>Flucht nach Schweden, Widerstandshilfe, Quisling-Kollaboration</td>
+                </tr>
+                <tr>
+                    <td><strong>🇧🇪 Belgien</strong></td>
+                    <td><span class="rate-medium">40%</span></td>
+                    <td>Osteuropäische Juden warnten, früher Widerstand</td>
+                </tr>
+                <tr>
+                    <td><strong>🇧🇬 Bulgarien</strong></td>
+                    <td><span class="rate-low">0% Kernland / <span class="rate-high">97% besetzte Gebiete</span></span></td>
+                    <td>Parlament & Kirche verhinderten Deportation, aber 11.343 aus Mazedonien deportiert</td>
+                </tr>
+                <tr>
+                    <td><strong>🇬🇷 Griechenland</strong></td>
+                    <td><span class="rate-high">82-87%</span></td>
+                    <td>Saloniki 96% vernichtet, 46.000 deportiert, deutsche & bulgarische Zonen</td>
+                </tr>
+                <tr>
+                    <td><strong>🇷🇸 Serbien</strong></td>
+                    <td><span class="rate-high">~90%</span></td>
+                    <td>Mai 1942 "judenfrei" erklärt, Wehrmacht-Verbrechen, Gaswagen</td>
+                </tr>
+                <tr>
+                    <td><strong>🇭🇷 Kroatien</strong></td>
+                    <td><span class="rate-high">~75%</span></td>
+                    <td>Jasenovac Vernichtungslager, Ustascha-Fanatismus, 30.000+ ermordet</td>
+                </tr>
+                <tr>
+                    <td><strong>🇸🇰 Slowakei</strong></td>
+                    <td><span class="rate-high">75-80%</span></td>
+                    <td>1942: 58.000 deportiert für 500 RM, 1944: 13.500 weitere</td>
+                </tr>
+                <tr>
+                    <td><strong>🇭🇺 Ungarn</strong></td>
+                    <td><span class="rate-high">~70%</span></td>
+                    <td>437.000 in 56 Tagen 1944, Eichmann persönlich, ungarische Kollaboration</td>
+                </tr>
+                <tr>
+                    <td><strong>🇵🇱 Polen</strong></td>
+                    <td><span class="rate-high">90%</span></td>
+                    <td>Zentrum der Vernichtung, sechs Todeslager, 3 Millionen ermordet</td>
+                </tr>
+                <tr>
+                    <td><strong>🇷🇴 Rumänien</strong></td>
+                    <td><span class="rate-high">50-60%</span></td>
+                    <td>Eigener Völkermord in Transnistrien, Kernland größtenteils geschützt</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🎓 Teil 4: Motivationen für Kollaboration</h2>
+
+        <div class="warning-box">
+            <h3>Warum kollaborierten manche Länder?</h3>
+            <p><strong>Hauptmotive laut Holocaust Encyclopedia:</strong></p>
+            <ul class="factor-list">
+                <li><strong>1. Antisemitismus:</strong> Tief verwurzelt seit dem 19. Jahrhundert</li>
+                <li><strong>2. Nationalismus:</strong> Ethnischer Hass auf Minderheiten</li>
+                <li><strong>3. Antikommunismus:</strong> Juden wurden mit Kommunismus assoziiert</li>
+                <li><strong>4. Opportunismus:</strong> Wirtschaftliche Vorteile, Konfiszierung jüdischen Eigentums</li>
+                <li><strong>5. Druck und Zwang:</strong> Durch die Besatzungsmacht</li>
+            </ul>
+        </div>
+
+        <div class="note" style="margin-top: 30px; font-size: 1.1em;">
+            <strong>📌 Für Ihre Analyse:</strong> Wählen Sie ein Land aus und vergleichen Sie es mit Dänemark. 
+            Notieren Sie die konkreten Opferraten, die wichtigsten Unterschiede in den Faktoren. 
+            Was machte den Unterschied zwischen Rettung und Vernichtung aus?
+        </div>
+    </div>
+
+    <script>
+        function showCountry(countryId) {
+            // Verstecke alle Infos
+            const allInfos = document.querySelectorAll('.country-info');
+            allInfos.forEach(info => info.classList.remove('active'));
+
+            // Deaktiviere alle Buttons
+            const allButtons = document.querySelectorAll('.country-btn');
+            allButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Zeige ausgewählte Info
+            const selectedInfo = document.getElementById(countryId);
+            if (selectedInfo) {
+                selectedInfo.classList.add('active');
+                // Scrolle zur Info
+                selectedInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Aktiviere entsprechenden Button
+            const buttons = document.querySelectorAll(`[onclick="showCountry('${countryId}')"]`);
+            buttons.forEach(btn => btn.classList.add('active'));
+        }
+
+        // Scrolle nach oben beim Laden
+        window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
